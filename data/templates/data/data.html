@@ -1,0 +1,115 @@
+{% extends "data_main.html" %}
+{% block data %}
+<table class="table">
+  <thead>
+    <tr>
+      <i data-toggle="modal" data-target="#exampleModal" style="font-size:30px;" class="fas fa-plus-square"></i>
+      <th scope="col">#</th>
+      <th scope="col">Nama</th>
+      <th scope="col">Nim</th>
+      <th scope="col">Alamat</th>
+      <th scope="col">Tanggal</th>
+      <th scope="col">#</th>
+    </tr>
+  </thead>
+  {% for row in data %}
+  <tbody>
+    <tr>
+      <th class="row">{{ forloop.counter }}</th>
+      <th><a href="{% url 'sluginput' inputdata=row.id  %}">{{row.nama}}</a></th>
+      <th>{{row.nim}}</th>
+      <th>{{row.alamat|truncatechars:10}}</th>
+      <th>{{row.created_at}}</th>
+      <th>
+        <button data-toggle="modal" data-target="#exampleModal{{row.id}}" type="button" class="btn btn-outline-info" name="button">Edit</button>
+        <a href="{% url 'namedelete' inputdelete=row.id %}"><button type="button" class="btn btn-outline-danger" name="button">Delete</button></a>
+      </th>
+    </tr>
+  </tbody>
+    <!-- Button trigger modal -->
+      {% block modaledit %}
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal{{row.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Data</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" action="{% url 'nameedit'%}">
+              {% csrf_token %}
+            <div class="modal-body">
+              <input type="hidden" name="idedit" value="{{row.id}}">
+              <div class="form-group">
+                <label for="nama">nama</label>
+                <input name="namaedit" type="text" class="form-control" id="nama" aria-describedby="nama" value="{{row.nama}}" placeholder="Enter nama">
+              </div>
+              <div class="form-group">
+                <label for="nim">nim</label>
+                <input name="nimedit" type="text" class="form-control" id="nim" aria-describedby="nim" value="{{row.nim}}" placeholder="Enter nim">
+            </div>
+          <div class="form-group">
+            <label for="alamat">alamat</label>
+            <input name="alamatedit" type="text" class="form-control" id="alamat" aria-describedby="alamat" value="{{row.alamat}}" placeholder="Enter alamat">
+        </div>
+        <div class="form-group">
+          <label for="status">status</label>
+          <input name="statusedit" type="text" class="form-control" id="status" aria-describedby="status"  value="{{row.status}}" placeholder="Enter status">
+      </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      {% endblock modaledit %}
+  {% endfor %}
+</table>
+{% endblock data %}
+
+<!-- Button trigger modal -->
+  {% block modal %}
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="POST" action="{% url 'namecreate' %}">
+          {% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group">
+            {{ form.nama.label }}
+            {{ form.nama }}
+          </div>
+          <div class="form-group">
+          {{ form.nim.label }}
+          {{ form.nim }}
+        </div>
+      <div class="form-group">
+      {{ form.status.label }}
+      {{ form.status }}
+    </div>
+    <div class="form-group">
+    {{ form.alamat.label }}
+    {{ form.alamat }}
+  </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  {% endblock modal %}

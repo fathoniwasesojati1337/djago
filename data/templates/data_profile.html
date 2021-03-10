@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% include "layouts/header.html" %}
+  </head>
+  <body>
+    {% include "layouts/navbar.html" %}
+    <div class="container">
+      {% block profile %}
+      {% endblock profile %}
+    </div>
+    {% include "layouts/footer.html" %}
+  </body>
+</html>

@@ -1,0 +1,7 @@
+.image-awal{
+  background-image: url(http://127.0.0.1:8000/public/img/anime.jpg);
+}
+.jumbotron{
+  max-width:600%;
+  max-height: 600%;
+}

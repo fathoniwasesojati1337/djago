@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% include "layouts/header.html" %}
+  </head>
+  <body>
+    {% include "layouts/navbar.html" %}
+    <div class="container">
+      {% block data %}
+      {% endblock data %}
+      {% block modal %}
+      {% endblock modal %}
+      {% block modaledit %}
+      {% endblock modaledit %}
+    </div>
+    {% include "layouts/footer.html" %}
+  </body>
+</html>
